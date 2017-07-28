@@ -1,0 +1,172 @@
+@prefix :     <> .
+@prefix cc:   <http://creativecommons.org/ns#> .
+@prefix dc:   <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gr:   <http://purl.org/goodrelations/v1#> .
+@prefix igeo: <http://rdf.insee.fr/def/geo#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .	
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+
+###################
+# Ontology description #
+###################
+:  a  owl:Ontology;
+    cc:license <http://creativecommons.org/licenses/publicdomain/zero/1.0/>;
+    dc:creator  <http://nooranibakerally.com/#me>,<http://zimmer.aprilfoolsreview.com/antoine#me>;
+    dc:description  "A vocabulary to describe designs of LDP"@en;
+    dc:issued  "2017-07-15T10:42:42+01:00"^^xsd:dateTime;
+    rdfs:label  "LDP Design Vocabulary"@en .
+
+####################
+# Annotation properties #
+####################
+cc:license  a  owl:AnnotationProperty .
+dc:creator  a  owl:AnnotationProperty .
+dc:issued  a  owl:AnnotationProperty .
+
+##################
+# Datatype properties #
+##################
+:slugTemplate a owl:DatatypeProperty;
+    rdfs:label "slugTemplate"@en;
+    rdfs:comment  "specifies slug template of a source map"@en;
+    rdfs:domain  :SourceMap;
+    rdfs:range  xsd:string . 
+
+:contentType a owl:DatatypeProperty;
+    rdfs:label "contentType"@en;
+    rdfs:comment  "specifies the content type of resources for a non-RDF source map"@en;
+    rdfs:domain  :NonRDFSourceMap;
+    rdfs:range  xsd:string . 
+
+:resourceQuery a owl:DatatypeProperty;
+    rdfs:label "resourceQuery"@en;
+    rdfs:comment  "specifies the resourceQuery of a ResourceMap which it uses to generates its resources"@en;
+    rdfs:domain  :ResourceMap;
+    rdfs:range  xsd:string . 
+
+:graphQuery a owl:DatatypeProperty;
+    rdfs:label "graphQuery"@en;
+    rdfs:comment  "specifies the graphQuery of a ResourceMap which it uses to generates the RDF graph of its resources"@en;
+    rdfs:domain  :ResourceMap;
+    rdfs:range  xsd:string . 
+
+:location a owl:DatatypeProperty;
+    rdfs:label "location"@en;
+    rdfs:comment  "specifies the location of an RDF graph for a data source"@en;
+    rdfs:domain  :DataSource;
+    rdfs:range  xsd:string . 
+
+:sGenerateLiftingRule a owl:DatatypeProperty;
+    rdfs:label "sGenerateLiftingRule"@en;
+    rdfs:comment  "specifies the location of SPARQL Generate lifting rule"@en;
+    rdfs:domain  :DataSource;
+    rdfs:range  xsd:string . 
+
+
+#################
+# Object properties #
+#################
+:containerMap  a  owl:ObjectProperty;
+    rdfs:label  "containerMap"@en;
+    rdfs:comment  "links a ContainerMap to another ContainerMap"@en;
+    rdfs:domain  :ContainerMap;
+    rdfs:range  :ContainerMap .
+
+:rdfSourceMap  a  owl:rdfSourceMap;
+    rdfs:label  "RDFSourceMap"@en;
+    rdfs:comment  "links a ContainerMap to an RDFSourceMap"@en;
+    rdfs:domain  :ContainerMap;
+    rdfs:range  :RDFSourceMap .
+
+:nonRDFSourceMap  a  owl:ObjectProperty;
+    rdfs:label  "nonRDFSourceMap"@en;
+    rdfs:comment  "links a ContainerMap to an NonRDFSourceMap"@en;
+    rdfs:domain  :ContainerMap;
+    rdfs:range  :NonRDFSourceMap .
+
+ :containerType  a  owl:ObjectProperty;
+    rdfs:label  "Container Type"@en;
+    rdfs:comment  "links a ContainerMap to a type of container"@en;
+    rdfs:domain  :ContainerMap;
+    rdfs:range  ldp:Container .
+
+:resourceMap a  owl:ObjectProperty;
+    rdfs:label  "resourceMap"@en;
+    rdfs:comment  "links a SourceMap to a ResourceMap to defines its set of resources"@en;
+    rdfs:domain  :SourceMap;
+    rdfs:range  :ResourceMap .
+
+:dataSource a  owl:ObjectProperty;
+    rdfs:label  "dataSource"@en;
+    rdfs:comment  "links a ResourceMap to a DataSource to define its data source"@en;
+    rdfs:domain  :ResourceMap;
+    rdfs:range  :DataSource .
+
+:graphTemplate owl:ObjectProperty;
+    rdfs:label  "graphTemplate"@en;
+    rdfs:comment  "links a ResourceMap to a GraphTemplate to define the template of the RDF graph of its resources"@en;
+    rdfs:domain  :ResourceMap;
+    rdfs:range  :GraphTemplate .
+
+##########
+# Classes #
+##########
+
+:SourceMap  a  owl:Class;
+    rdfs:label  "SourceMaps"@en;
+    rdfs:comment "defines a set of LDP resources"@en .
+
+:RDFSourceMap  a  owl:Class;
+    rdfs:label "RDFSourceMap"@en;
+    rdfs:comment "defines a set of LDP RDF sources"@en;
+    rdfs:subClassOf  :SourceMap .
+
+:NonRDFSourceMap  a  owl:Class;
+    rdfs:label "NonRDFSourceMap"@en;
+    rdfs:comment "defines a set of LDP non-RDF sources"@en;
+    rdfs:subClassOf  :SourceMap .
+
+:ContainerMap  a  owl:Class;
+    rdfs:label "ContainerMap"@en;
+    rdfs:comment "defines a set of LDP containers"@en;
+    rdfs:subClassOf  :RDFSourceMap .
+
+
+:ResourceMap  a  owl:Class;
+    rdfs:label "ResourceMap"@en;
+    rdfs:comment "defines a set of resources"@en .
+
+:DataSource  a  owl:Class;
+    rdfs:label "DataSource"@en;
+    rdfs:comment "defines a data source"@en .
+
+
+:GraphTemplate  a  owl:Class;
+    rdfs:label "GraphTemplate"@en;
+    rdfs:comment "defines a graph template"@en .
+
+:SubjectGraph a  owl:Class;
+    rdfs:label "SubjectGraph"@en;
+    rdfs:comment "defines a subject graph template to be used by the ResourceMap to generate the RDF graph of its resources. A subject graph for a particular resource includes only those triples from an RDF graph where the resource is the subject"@en;
+    rdfs:subClassOf  :GraphTemplate . 
+
+:SubjectObjectGraph a  owl:Class;
+    rdfs:label "SubjectObjectGraph"@en;
+    rdfs:comment "defines a subject-object graph template to be used by the ResourceMap to generate the RDF graph of its resources. A subject object graph for a particular resource includes those triples from an RDF graph where the resource is either the subject or the object"@en;
+    rdfs:subClassOf  :GraphTemplate . 
+
+:ObjectGraph a  owl:Class;
+    rdfs:label "ObjectGraph"@en;
+    rdfs:comment "defines a object graph template to be used by the ResourceMap to generate the RDF graph of its resources. A object graph for a particular resource includes only those triples from an RDF graph where the resource is the subject"@en;
+    rdfs:subClassOf  :GraphTemplate .
+
+############
+# Individuals #
+############
+<http://zimmer.aprilfoolsreview.com/antoine#me>  a  foaf:Person .
+<http://nooranibakerally.com/#me>  a  foaf:Person .
